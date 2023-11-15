@@ -244,6 +244,7 @@ Por último hacemos el dig otra vez y nos tiene que aparecer lo mismo o al menos
 tiendadeelectronica.int. 60 IN TXT "1234ASDF"
 ```
 `dig @172.28.5.1 tiendadeelectronica.int CNAME`:
+
 ```
 ;; ANSWER SECTION:
 www.tiendadeelectronica.int. 27 IN CNAME owncloud.tiendadeelectronica.int
