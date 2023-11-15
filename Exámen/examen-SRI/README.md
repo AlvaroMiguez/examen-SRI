@@ -13,11 +13,37 @@ Para que podamos interactuar con las entradas y salidas en el docker run hay que
 
 
 3. **¿Cómo sería un fichero docker-compose para que dos contenedores se comuniquen entre si en una red solo de ellos?**
-Adjuntado en el repositorio
+```
+services:
+  asir_bind9:
+    container_name: asir_bind9
+    image: internetsystemsconsortium/bind9:9.16
+    ports:
+      - 53:53
+    networks:
+      bind9_subnet:
+        ipv4_address: 172.28.5.1
+    volumes:
+      - ./config:/etc/bind
+      - ./lib:/var/lib/bind
+  asir_cliente:
+    container_name: asir_cliente
+    image: alpine
+    networks:
+      - bind9_subnet
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    dns:
+      - 172.28.5.1 # el contenedor dns server
+networks:
+  bind9_subnet:
+    external: true
+
+```
 
 4. **¿Qué hay que añadir al fichero anterior para que un contenedor tenga la IP fija?**
 
-Pues coma ya lo añadí en el fichero anterior no hace falta repetirlo pero en el caso en el que no esté puesto sería la línea de: 
+Pues como ya lo añadí en el fichero anterior no hace falta repetirlo pero en el caso en el que no esté puesto sería la línea de: 
 ```
 
 ipv4_address: 172.28.5.1
